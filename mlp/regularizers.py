@@ -21,8 +21,8 @@ class Regularizer:
 
     @staticmethod
     def elastic(weights, lambda_, l1_ratio=0.5):
-        return l1_ratio * Regularize.l1(weights, lambda_) + (1 - l1_ratio) * Regularize.l2(weights, lambda_)
+        return l1_ratio * Regularizer.l1(weights, lambda_) + (1 - l1_ratio) * Regularizer.l2(weights, lambda_)
 
     @staticmethod
     def elastic_grad(weights, lambda_, l1_ratio=0.5):
-        return l1_ratio * Regularize.l1_grad(weights, lambda_) + (1 - l1_ratio) * Regularize.l2_grad(weights, lambda_)
+        return l1_ratio * Regularizer.l1_grad(weights, lambda_) + (1 - l1_ratio) * Regularizer.l2_grad(weights, lambda_)

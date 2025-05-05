@@ -1,12 +1,18 @@
 import numpy as np
 from losses import loss_functions
 from mlp.layers import DenseLayer
+from mlp.optimizers import SGD
 from regularizers import Regularizer
 
 
 class MLPModel:
     def __init__(self, layers, activations, task='classification',
                  weight_init='xavier', reg=None, reg_lambda=0.0):
+        if task == 'classification' and activations[-1] != 'softmax':
+            raise ValueError("Classification requires softmax output")
+        if task == 'regression' and activations[-1] != 'linear':
+            raise ValueError("Regression requires linear output")
+
         self.layers = []
         self.task = task
         self.reg = reg
@@ -96,3 +102,12 @@ class MLPModel:
         if self.task == 'classification':
             return np.argmax(y_pred, axis=1)
         return y_pred
+
+    def evaluate(self, X, y):
+        y_pred = self.predict(X)
+        if self.task == 'classification':
+            accuracy = np.mean(y.argmax(axis=1) == y_pred)
+            return {'accuracy': accuracy}
+        else:
+            mse = np.mean((y - y_pred) ** 2)
+            return {'mse': mse}

@@ -1,5 +1,6 @@
 import numpy as np
 
+from mlp.activations import activations
 from mlp.regularizers import Regularizer
 
 
@@ -18,9 +19,11 @@ class DenseLayer:
 
     def initialize_weights(self, input_size, output_size, method):
         if method == 'xavier':
+            # Xavier初始化  适用Sigmoid、Tanh 等对称且梯度在原点附近较大的激活函数
             limit = np.sqrt(6 / (input_size + output_size))
             return np.random.uniform(-limit, limit, (input_size, output_size))
         elif method == 'he':
+            # He初始化 适用ReLU、Leaky ReLU、PReLU 等非对称或具有“死区”的激活函数
             std = np.sqrt(2 / input_size)
             return np.random.randn(input_size, output_size) * std
         else:  # 'normal'
