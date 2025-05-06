@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 
 def load_mnist(train_path, test_path):
-    train = pd.read_csv(train_path)
-    test = pd.read_csv(test_path)
+    train = pd.read_csv(train_path,header=None)
+    test = pd.read_csv(test_path,header=None)
 
     X_train = train.iloc[:, 1:].values / 255.0
     y_train = train.iloc[:, 0].values
